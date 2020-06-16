@@ -1,5 +1,5 @@
 
-第一步  创建.sh脚本文件
+第一步  创建.sh脚本文件  #Shell脚本:
 
 cd /www
 touch test.sh
@@ -12,12 +12,28 @@ chmod a+x test.sh
 #直接执行
 ./test.sh
 
+注：这里可能会报错
+Warning: Using a password on the command line interface can be insecure.
+
+解决方法、修改数据库配置文件
+vim  /www/server/mysql/my.cnf
+
+我们需要在[client]部分添加脚本：
+host=localhost
+user=数据库用户
+password='数据库密码'
+这里参数要修改成我们自己的
+
+*/1 * * * * /www/test.sh
+具体是什么意思呢？ 
+意思是每一分钟执行一次shell脚本“/www/test.sh”。
+
 
 nginx定时任务
  
 crondtab -e
 
-30 * * * * /www/test.sh  # 每30分钟执行
+30 * * * * /www/test.sh;/www/www.sh  # 每30分钟执行    多任务;分割
 * * * * * sleep 10; /www/test.sh #每分钟第10秒执行  注意 ; 必须
 
 service crond restart       ###重启服务
