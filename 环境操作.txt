@@ -98,6 +98,15 @@ server {
     }
 }
 
+location / {
+        root /www/newwww/;
+        #index web/index.html;
+        try_files $uri $uri/ /index.html;
+    }
+
+
+
+
 
 
 pm2 start server.js --name='mobile'    pm2 start bin/www -x --name app
