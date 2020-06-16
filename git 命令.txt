@@ -1,0 +1,208 @@
+如何在找到全局安装的位置呢
+
+方法一：
+
+设置到自己想要放的位置：
+
+打开：nodejs安装目录/node_modules/npm/.npmrc这个文件，修改里面的路径
+
+prefix = E:\nodejs\npm_global_modules
+
+
+ 方法二：
+
+使用快捷键 win+R,输入cmd打开命令窗口，输入如下代码：
+
+npm config ls
+
+
+
+
+
+
+
+
+查看项目的分支们
+git branch -a
+
+
+查看远程分支
+git branch -r
+
+
+查看本地分支
+git branch
+
+
+新建本地分支
+git branch newWeb
+
+
+删除本地分支
+git branch -d aaa
+
+
+删除远程分支
+git push origin --delete aaa
+
+
+
+
+
+切换分支
+
+git checkout -d dev origin/dev
+
+git checkout master
+
+git checkout dev
+
+
+
+把远程分支的代码pull到本地分支
+
+
+git pull origin dev:dev
+表示，将本地的dev分支推送到origin主机的dev分支。
+
+
+git pull origin dev
+表示将本地分支推送与之存在"追踪关系"的远程分支（通常两者同名），如果该远程分支不存在，则会被新建。
+
+
+
+git add上传本地项目所有变化的命令三种有 git add -A、git add -u、git add .
+
+git add -A  提交所有变化
+git add -u  提交被修改(modified)和被删除(deleted)文件，不包括新文件(new)
+git add .  提交新文件(new)和被修改(modified)文件，不包括被删除(deleted)文件
+
+
+
+
+
+
+
+提交文件步骤  
+
+git status  查看修改的所有文件
+
+提交单个文件操作
+1  git add index.html
+
+2  git commit -m index.html
+
+3  git push origin dev
+
+
+
+提交所有修改的文件
+
+1  git add -A
+
+2  git commit -a -m '样式调整'
+
+3  git push
+
+
+
+
+
+恢复单个文件操作
+
+1   git log --oneline src/static/css/mobile.css
+
+返回信息
+5eef47f (HEAD -> dev, origin/dev) update
+8c17134 init project
+
+2 git reset 8c17134 src/static/css/mobile.css
+
+
+3 提交历史版本内容
+
+ git commit -m '恢复mobile.css'
+
+
+
+git放弃修改，强制覆盖本地代码
+
+git fetch --all
+
+git reset --hard origin/master
+
+git pull
+
+
+
+
+
+
+
+
+自己配置git
+
+ 1 建立本地仓库
+ 窗口输入命令： git init 初始化，
+
+ 2 将项目中所有文件添加到仓库
+ 输入指令： git add .
+
+
+ 3 把文件提交到仓库
+ 双引号内是提交注释；
+ 输入指令： git commit -m "注释内容"
+
+
+
+ 4 获取到github仓库地址后，将本地仓库与github仓库关联
+ git remote add origin https://github.com/midnightvisitor/my-project.git
+
+ 5 上传本地项目
+ 输入指令： git push -u origin master
+
+
+
+
+
+
+
+
+
+
+git 解决每次更新代码都要输入用户名密码的解决方案
+
+git config --global credential.helper store
+
+git pull /git push (第一次输入，后续就不用再次数据)
+
+
+
+
+
+多表查询
+select c.id,c.parent_id,c.user_id,u.login_name,u.mobile,c.project_id,p.project_name,c.create_time,c.update_time,COUNT(c.project_id) AS num  
+FROM jgb_comment c inner JOIN jgb_user u ON c.user_id=u.user_id inner join jgb_project p on c.project_id=p.project_id where parent_id=0 GROUP BY project_id order by create_time desc
+
+
+select c.id,c.parent_id,c.user_id,u.login_name,u.mobile,c.project_id,p.project_name,c.create_time,c.update_time  
+FROM jgb_comment c inner JOIN jgb_user u ON c.user_id=u.user_id inner join jgb_project p on c.project_id=p.project_id where c.project_id='201812231545537610' order by create_time desc
+
+
+
+
+
+select p.* from jgb_project p inner join jgb_zan z on p.project_id=z.project_id WHERE z.user_id='2018122320242275733823853'
+
+
+
+
+
+
+
+
+
+
+
+
+

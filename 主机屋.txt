@@ -1,0 +1,165 @@
+wenlinqing@szrfweb.com    Qq123456Qq
+
+wenlinqing@mojivip.cn     Qq123456Qq
+
+wenlinqing@miaopos.com    Qq123456Qq
+
+
+主机屋 865204246@qq.com  123456wlq
+
+主机屋FTP
+111.67.196.19
+ftp6240083
+Wlq123456789
+
+http://ftp6240083.host707.zhujiwu.me/
+
+
+
+数据库 
+127.0.0.1
+zjwdb_6240083  端口 3306
+WLQ123456wlq
+
+
+
+
+43.226.159.211
+
+数据库名称   zjwdb_6266193
+数据库账号   zjwdb_6266193   www123456789WWW
+
+
+
+
+
+
+
+阿里云
+865204246@qq.com
+wlq123456
+
+
+
+
+阿里云sql 连接地址
+101.132.26.177   Qq123456
+
+
+
+
+
+高德key  b2ee0e0b62544b118b34f5c89da1659c
+
+
+
+小程序 
+
+381199589@qq.com  100656wlq
+
+AppID(小程序ID)          wxece9bf7e2cbfacf8
+
+AppSecret(小程序密钥)    994fb83b9d0f2399af35cfabb37b02ad
+
+
+1779848910@qq.com  100656wlq
+
+AppID(小程序ID)          wx8a3aab430d5fe672
+
+AppSecret(小程序密钥)    5fb19f9adfa9dd0729488e60c8bd4559
+
+
+3300768957  
+
+
+
+
+
+小程序在线制作  点点客 https://applet.dodoca.com/manage/login
+
+www_wlq  WLQ100656wlq
+
+appId
+wx6ac3e3c5526bb3ba
+
+
+
+
+
+wx8e0879a4bf9db4dd
+
+chengui@miaopos.com
+
+Qq12345678
+
+
+zhongzhi@mojivip.cn
+jack0755
+墨叽微生活  wx239100b470eb7366
+AppSecret   6b098fa682de2187a09d8fcc121a88b9
+
+
+tech@mojivip.cn
+jack0755
+
+
+shopping@mojivip.cn
+jack0755
+墨叽商城    wx9ad1e8e3fa5d06cf
+AppSecret   406c78d147c7a66d875d1947ba2dbc24
+
+
+
+墨叽公开课
+public_class@mojivip.cn   jack0755
+
+wx762c9782a89548a0
+
+
+墨叽生活服务平台
+admin@mojivip.cn	jack0755
+
+
+
+
+我的测试号信息
+appID
+wxcfd6eec15d02dba2
+
+appsecret
+7454ad2730e9d56e39b08cc057309273
+
+
+
+
+我的微信公众平台
+账号 865204246@qq.com   wlq100656
+
+AppID   wx0fafb4df237d1d54
+AppSecret   08d1785c9cb672dc6264daafbea5db6e
+
+获取access_token
+https请求方式: GET
+https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=wx0fafb4df237d1d54&secret=08d1785c9cb672dc6264daafbea5db6e
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

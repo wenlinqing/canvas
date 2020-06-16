@@ -1,0 +1,301 @@
+
+xshell 操作命令
+
+rz   上传文件
+
+unzip dist.zip  解压文件
+
+rm index.html   删除文件
+
+rm -rf static   删除static文件夹 及其所以文件
+
+
+pm2 start api  启动api服务
+pm2 stop  api  停止api服务
+
+
+mysql --version  查看版本信息
+
+mysql  进入mysql操作
+
+show databases;   列出所有数据库
+
+use company;    使用company库
+
+show tables;    列出所有表
+
+select * from user;  查询user表所有数据
+
+
+输入 mysql 报错如下：
+ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: NO)
+
+处理方法：
+
+1进入配置文件  vim /etc/my.cnf
+
+2加上       skip-grant-table
+
+3重启数据库  /etc/init.d/mysqld restart
+
+
+
+
+
+nginx操作 
+
+nginx -V  查看配置 及 文件路径
+
+进入nginx文件夹
+cd /www/server/nginx/  
+
+cd conf    (nginx/conf)
+
+
+cd /www/server/panel/vhost/nginx/  查看包含的配置   可修改对应配置
+
+
+server {
+    listen 80;
+
+    location / {
+        root /www/newwww/;
+        index web/index.html;
+    }
+
+    location /nodeServer {
+        root /www/newwww/;
+    }
+    location /images {
+        root /www/newwww/;
+    }
+
+    location /admin {
+        root /www/newwww/;
+        index index.html;
+    }
+  
+    location /api {
+        #node.js应用的端口
+        proxy_pass http://127.0.0.1:3000;
+    }
+
+    location /mobile {
+        #node.js应用的端口
+        proxy_pass http://127.0.0.1:8888;
+    }
+    location /asset{
+        root /www/mobile/;
+    }
+    location /mobileimages {
+        root /www/newwww/;
+    }
+    location /ueditor/ue {
+        proxy_pass http://127.0.0.1:6000;
+    }
+    location /MP_verify_a3pmmnhDfmLqxLby.txt {
+        root /www/newwww/images;
+    }
+}
+
+
+
+pm2 start server.js --name='mobile'    pm2 start bin/www -x --name app
+
+
+netstat -ntpl  查看所有服务端口
+
+
+pm2 log  查看日志
+
+nginx -s reload  重启nginx服务
+
+
+service iptables status   查看防火墙状态
+service iptables start    启动防火墙
+service iptables stop     关闭防火墙
+
+
+
+
+
+
+
+
+
+
+ngnix 上装node环境
+
+wget  https://nodejs.org/dist/v10.14.2/node-v10.14.2-linux-x64.tar.xz   选择nginx环境版本 
+
+cd /usr/local/
+
+mkdir node
+
+cd node/
+
+cp ~/node-v10.14.2-linux-x64.tar.xz  ./
+
+
+tar -xvf node-v10.14.2-linux-x64.tar.xz 
+
+
+cd node-v10.14.2-linux-x64
+pwd
+
+
+vim /etc/profile  //进去添加 node 环境变量
+
+export NODE_HOME=/usr/local/node/node-v10.14.2-linux-x64
+export PATH=$PATH:NODE_HOME/bin
+
+
+source /etc/profile  //重新启用 配置文件
+
+
+
+
+service mysqld restart   重启数据库
+
+
+https://blog.csdn.net/augst1/article/details/78426731   Xshell 5中安装mysql的方法
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+shaofei       47.94.218.115 wenlinqing  moji2017
+
+
+
+luxudong 数据库
+
+地址  bdm307005586.my3w.com
+
+账号  bdm307005586
+
+密码  Xudtianc520
+
+
+数据库名
+bdm307005586_db
+
+
+主机 
+
+39.105.203.226
+
+用户名：byw5681870001
+
+
+
+
+
+
+jgb server
+
+120.78.72.112  root Aly?2018
+
+
+http://la-bang.cn/admin/
+
+
+
+jgb
+
+
+jgb2468
+
+
+
+景观邦 第三方管理的接入 
+
+帐号 yqy@la-bang.cn
+  Labang147
+
+
+开发者ID(AppID)
+wx3ecaabf3c5bb5db5
+
+AppSecret
+8d22be18fb5b106595e2b79ab5598c24
+
+
+
+
+
+账号 dm@la-bang.cn
+
+密码 Labang147
+
+
+wx9c45ad46f377cea8
+e80f605b85a117293b0ddd6c995eb114
+
+
+
+
+
+
+
+
+
+sudo rm /usr/local/nginx/front/build/* -rf
+
+sudo mv build.zip /usr/local/nginx/front/build
+cd /usr/local/nginx/front/build/
+sudo unzip build.zip
+
+
+
+ 2051  sudo rm ./* -rf
+ 2052  cd ~
+ 2053  rz
+ 2054  cd -
+ 2055  sudo mv ~/build.zip .
+ 2056  sudo unzip build.zip 
+
+
+
+  sudo mkdir -p build
+ 1769  cd build/
+ 1770  sudo mv ~/build.zip .
+ 1771  sudo unzip build.zip 
+
+
+
+gogo9741
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

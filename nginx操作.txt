@@ -1,0 +1,57 @@
+
+第一步  创建.sh脚本文件
+
+cd /www
+touch test.sh
+vim test.sh
+############编辑 保存
+
+####添加可执行权限
+chmod a+x test.sh
+
+#直接执行
+./test.sh
+
+
+nginx定时任务
+ 
+crondtab -e
+
+30 * * * * /www/test.sh  # 每30分钟执行
+* * * * * sleep 10; /www/test.sh #每分钟第10秒执行  注意 ; 必须
+
+service crond restart       ###重启服务
+
+语法
+ minute   hour   day   month   week   command  
+
+
+查看定时任务
+crontab -l
+
+
+
+
+
+service crond start //启动服务
+service crond stop //关闭服务
+service crond restart //重启服务
+service crond reload //重新载入配置
+crontab -l 查看系统中有哪些定时任务
+crontab -r 删除定时任务
+crontab -e 编辑定时任务
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
