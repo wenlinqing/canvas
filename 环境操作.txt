@@ -12,6 +12,7 @@ rm -rf static   删除static文件夹 及其所以文件
 
 pm2 start api  启动api服务
 pm2 stop  api  停止api服务
+pm2 delete id  删除id进程
 
 
 mysql --version  查看版本信息
@@ -104,7 +105,28 @@ location / {
         try_files $uri $uri/ /index.html;
     }
 
+location /MP_verify_3hF5YVbWYpFxgAsc.txt {
+        root /www/newwww/images;
+    }
+    location ^~ /www/ {
+        root /www/newwww/;
+        try_files $uri $uri/ /www/index.html;
+        index index.html index.htm;
+    }
+    location /aaa/ {
+        root /www/newwww/;
+        try_files $uri $uri/ /aaa/index.html;
+        index index.html index.htm;
+    }
 
+    location /shopWeb/ {
+        root /www/shopping/;
+        try_files $uri $uri/ /shopWeb/index.html;
+        index index.html;
+    }
+    location ~/shopApi/{
+        proxy_pass http://127.0.0.1:5000;
+    }
 
 
 
