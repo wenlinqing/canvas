@@ -1,0 +1,22 @@
+区块链异步异常捕捉_error:Error: platform missing String.prototype.normalize (operation="String.prototype.normalize", 
+form="missing NFKD", version=4.0.27)
+
+normalize-demo
+用于解决 String.prototype.normalize 的兼容性问题
+参考此 Demo 在 App.vue 引入 unorm.js 即可。
+
+
+
+compile-node-sass 解压到HBuildX >>>>plugins 中
+
+
+
+
+mnemonic.js  用来生成助记词 ，检验助记词  要先安装依赖吧包 
+
+
+
+
+
+
+
