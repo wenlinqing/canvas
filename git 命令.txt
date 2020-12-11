@@ -119,9 +119,7 @@ git status  查看修改的所有文件
 2 git reset 8c17134 src/static/css/mobile.css
 
 
-3 提交历史版本内容
-
- git commit -m '恢复mobile.css'
+3  git checkout  文件路径
 
 
 
