@@ -1,0 +1,124 @@
+
+python + Django 项目创建及配置
+1  // 安装django
+pip install django
+2  // 创建项目
+django-admin startproject ttsx
+
+3 // 创建应用 (工具pychram 中 Terminal)
+python manage.py startapp goods  // goods 商品应用
+python manage.py startapp cart // cart 购物车应用
+
+
+4 // 添加应用到setting.py中
+INSTALLER_APPS = {
+	....
+
+	'goods',
+	'cart'
+}
+
+5 // 启动项目(默认端口8000)
+python manage.py runserver 
+
+
+// 数据库配置
+1 在__init__.py 添加
+import pymysql
+pymysql.install_as_MySQLdb()
+
+2 // setting.py 配置数据库信息
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',// 这里改成mysql
+        'NAME': 'ttsx',
+        'HOST':'localhost',
+        'USER':'root',
+        'PASSWORD':'123456',
+        'PORT':'3306'
+    }
+}
+
+
+
+good_id = request.GET.get('id',1) // 设置默认为1
+  
+
+prev_url = request.META['HTTP_REFERER']
+
+response = redirect(prev_url) //获取response
+
+page = request.GET.get('page', 1)
+pagi = paginator(data,20)
+page_data = pagi.page(page)
+
+
+
+python 
+
+取出xlsx数据后  都是str类型   '{'username':'www', 'password':'123456'}'  
+如果需要转成dict   使用eval有效   json.loads()必须是双引号才行  单引号会报错
+
+传参数问题 post为例
+前端用json=data的话   python 后端要从 request.body 中取数据
+
+前端用data=data的话   
+   1 如果headers中 content-type: application/json
+    python 后端要从 request.body 中取数据
+
+   2 如果headers中 content-type: application/x-www-form-urlencoded
+   python 后端要从 request.POST.get 中取数据
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

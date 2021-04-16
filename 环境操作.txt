@@ -39,7 +39,7 @@ ERROR 1045 (28000): Access denied for user 'root'@'localhost' (using password: N
 
 3重启数据库  /etc/init.d/mysqld restart
 
-
+find / | grep app.js  查找app.js文件
 
 
 
@@ -130,12 +130,7 @@ location /MP_verify_3hF5YVbWYpFxgAsc.txt {
 
 
 
-
 pm2 start server.js --name='mobile'    pm2 start bin/www -x --name app
-
-
-netstat -ntpl  查看所有服务端口
-
 
 pm2 log  查看日志
 
@@ -167,8 +162,9 @@ cd node/
 
 cp ~/node-v10.14.2-linux-x64.tar.xz  ./
 
-
-tar -xvf node-v10.14.2-linux-x64.tar.xz 
+nginx环境操作方法
+xz -d node-v14.16.0-linux-x64.tar.xz
+tar -xvf node-v14.16.0-linux-x64.tar
 
 
 cd node-v10.14.2-linux-x64
@@ -180,8 +176,15 @@ vim /etc/profile  //进去添加 node 环境变量
 export NODE_HOME=/usr/local/node/node-v10.14.2-linux-x64
 export PATH=$PATH:NODE_HOME/bin
 
+export NODE_HOME=/usr/local/node/node-v14.16.0-linux-x64
+export PATH=$NODE_HOME/bin:$PATH
+
 
 source /etc/profile  //重新启用 配置文件
+
+netstat -ntlp|grep  80  查看占用80端口号的进程
+kill  37189
+
 
 
 
@@ -192,10 +195,24 @@ service mysqld restart   重启数据库
 https://blog.csdn.net/augst1/article/details/78426731   Xshell 5中安装mysql的方法
 
 
+======================================================================
+修改MySQL的登录设置：
+vi /etc/my.cnf  在[mysqld]的段中加上一句：skip-grant-tables 保存并且退出vi。
 
+service mysqld restart  #重新启动mysql服务 
 
+2  mysql -u root -p   回车
+要输入密码： 密码为空  直接回车
 
+3 use mysql
 
+4 update user set Password=password('123456') where User='root'
+
+5 flush privileges
+
+6 quit  # 退出
+
+7 去掉 skip-grant-tables  再重启mysql服务
 
 
 
