@@ -1,0 +1,343 @@
+
+yum源问题（etc/yum.repos.d/CentOS-Base.repo）
+
+mv /etc/yum.repos.d/CentOS-Base.repo /etc/yum.repos.d/CentOS-Base.repo.backup
+
+下载并使用阿里云仓库repo
+curl -o /etc/yum.repos.d/CentOS-Base.repo https://www.xmpan.com/Centos-6-Vault-Aliyun.repo
+更新yum
+yum clean all
+yum makecache
+
+执行 yum -y install lsof
+成功安装lsof
+
+
+
+
+
+
+安装依赖包
+yum -y install gcc
+yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel
+
+
+python3 安装
+cd /usr/local/tmp/Python-3.9.1
+./configure --prefix=/usr/local/python3 && make && make install
+
+ln -s /usr/local/python3/bin/python3.9 /usr/bin/python3
+ln -s /usr/local/python3/bin/pip3 /usr/bin/pip3
+
+
+
+nginx 安装
+cd /usr/local/tmp/nginx-1.16.1
+./configure --prefix=/usr/local/nginx && make && make install
+
+nginx -t 看配置是否正确
+
+ln -s /usr/local/nginx/sbin/nginx /usr/bin/nginx
+
+nginx
+nginx -s stop
+nginx -s reload
+
+
+nginx设置成开机自动启动服务
+
+1  在/etc/init.d下创建文件nginx，文件的内容拷贝官网内容，主要修改下面两个参数的值
+
+nginx="/usr/sbin/nginx" #修改成nginx执行程序的路径。
+NGINX_CONF_FILE="/etc/nginx/nginx.conf" #修改成nginx.conf文件的路径。
+
+目前我的环境修改成如下内容
+nginx="/usr/local/nginx/sbin/nginx"
+NGINX_CONF_FILE="/usr/local/nginx/conf/nginx.conf"
+
+
+2  chkconfig --add /etc/init.d/nginx   将nginx服务加入chkconfig管理列表
+
+
+域名测试   
+找到 C:\Windows\System32\drivers\etc\hosts
+192.168.1.128 www.bbb.com
+
+
+
+
+
+
+node安装
+
+1、 解压文件 tar xvf node-v10.14.2-linux-x64.tar
+2、 mv node-v10.14.2-linux-x64 /usr/local/node10
+创建软连接
+3、 ln -s /usr/local/node10/bin/node /usr/bin/node
+4、 ln -s /usr/local/node10/bin/npm /usr/bin/npm
+
+
+pm2 的安装
+npm install pm2 -g
+
+ln -s /usr/local/node10/bin/pm2 /usr/bin   创建软连接
+
+pm2 start server.js --name='mobile'    pm2 start bin/www -x --name app
+
+pm2实现linux重启后自启动node服务 方法
+
+1  pm2 save  自动生成启动信息
+
+#设置pm2 开机启动  输入：
+2  pm2 startup
+
+
+
+pm2 log  查看日志
+
+pm2 list   显示所有进程状态
+
+pm2 logs   显示所有日志
+
+pm2 logs api   显示一个进程的日志
+
+关闭重启所有进程
+pm2 stop all # 停止所有进程
+pm2 restart all # 重启所有进程
+pm2 reload all # 0 秒停机重载进程 (用于 NETWORKED 进程)
+
+
+关闭重启指定进程
+pm2 stop 0 # 停止指定的进程
+pm2 restart 0 # 重启指定的进程
+pm2 stop api
+pm2 restart api
+
+
+杀死进程
+pm2 delete 0 # 杀死指定的进程
+pm2 delete all # 杀死全部进程
+pm2 delete api # 杀死指定名字的进程
+
+显示相应进程/应用的总体信息
+pm2 show api
+
+
+
+
+mysql5.6 安装
+tar zxvf mysql-5.6.33-linux-glibc2.5-x86_64.tar.gz
+
+mv mysql-5.6.33-linux-glibc2.5-x86_64 /usr/local/mysql
+
+groupadd mysql 
+useradd -g mysql mysql
+
+开始安装：依次在命令行里输入以下命令：
+cd /usr/local/mysql/
+
+mkdir ./data/mydata
+
+chown -R mysql:mysql ./
+./scripts/mysql_install_db --user=mysql --datadir=/usr/local/mysql/data/mydata
+
+cp support-files/mysql.server /etc/init.d/mysqld
+
+chmod 755 /etc/init.d/mysqld
+
+cp support-files/my-default.cnf /etc/my.cnf
+
+以上不报错就说明安装好了。。但是想要mysql启动成功，得对它的启动脚本进行修改，修改方法如下：
+
+1、编辑启动脚本，接着上面的命令输入：
+
+vi /etc/init.d/mysqld
+
+vi是进入编辑模式，进入编辑模式之后，按i就可以对文件进行编辑了（此时可以在命令行的底部看见INSERT模式）
+
+2、找到需要修改的项，原文件是：
+
+basedir=
+datadir=
+
+需要将他们改成：
+basedir=/usr/local/mysql/
+datadir=/usr/local/mysql/data/mysql
+修改完成之后，按ESC键退出编辑模式；然后直接按键：wq（保存并退出）
+
+3、启动mysql
+service mysqld start
+
+################### 省略  直接创建 软连接
+4、加入环境变量，编辑/etc/profile这样就可以在任何地方使用mysql命令了：
+export PATH=$PATH:/usr/local/mysql/bin
+source /etc/profile
+####################
+
+service mysqld start
+service mysqld status
+service mysqld stop
+
+
+解决出现-bash: mysql: command not found的方法
+原因：因为系统默认会查找/usr/bin下的命令，由于mysql没有在这个目录下，所以出现not found。因此需要做一个软连接到/usr/bin目录下 。
+
+ln -s /usr/local/mysql/bin/mysql /usr/bin  软连接
+
+
+
+配置mysql开机自启动
+chkconfig --add /etc/init.d/mysqld 
+
+
+
+
+相关防火墙配置
+
+添加：
+firewall-cmd --zone=public --add-port=80/tcp --permanent
+
+重新载入：
+firewall-cmd --reload
+
+查看
+查看所有打开的端口： firewall-cmd --zone=public --list-ports
+
+删除
+firewall-cmd --zone= public --remove-port=3306/tcp --permanent
+
+
+
+navicat 连不上虚拟机mysql处理
+1  iptables -vnL   查看防火墙的状态，查看3306端口， 如果3306如下，是drop状态，或者根本无3306端口，说明3306端口设置问题
+  解决办法：
+   开放防火墙端口
+   添加需要监听的端口
+   /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+   #将更改进行保存
+   /etc/rc.d/init.d/iptables save
+
+或者在iptables配置中添加
+  vi /etc/sysconfig/iptables
+  -A INPUT -p tcp -m state --state NEW -m tcp --dport 80 -j ACCEPT
+  -A INPUT -p tcp -m state --state NEW -m tcp --dport 8082 -j ACCEPT
+  -A INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+  保存 重启iptables    service iptables restart
+
+
+
+2 远程链接了一下MySQL，出现了....is not allowed to connect to this MySQL server错误，
+查了一下，是因为MySQL没有允许远程登陆，所以要授权MySQL远程登陆。
+  解决：
+  从任何主机上使用root用户，密码：yourpassword（你的root密码）连接到mysql服务器：
+  # mysql -u root -proot 
+  # GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'yourpassword' WITH GRANT OPTION;
+  # FLUSH PRIVILEGES
+
+
+
+
+ps -ef|grep nginx  查看Nginx是否启动
+
+netstat -na|grep 80
+
+netstat -ntlp|grep  80  查看占用80端口号的进程
+kill  37189
+
+
+本地访问虚拟机nginx
+
+进入C:\Windows\System32\drivers\etc   修改 hosts 文件
+# 虚拟机地址
+192.168.238.128  vmware.coms
+
+
+
+
+
+
+mysqldump 导出提示Couldn't execute SELECT COLUMN_NAME...
+mysqldump命令：
+　　导出数据库：mysqldump -h ip -u root -p dbname > db.sql;
+　　导出数据库中的某个表：mysqldump -h ip -u root -p dbname tablename > tablename.sql;
+
+错误提示：
+　　mysqldump: Couldn't execute 'SELECT COLUMN_NAME, JSON_EXTRACT(HISTOGRAM, 
+'$."number-of-buckets-specified"') FROM information_schema.COLUMN_STATISTICS
+
+原因：
+　　因为新版的mysqldump默认启用了一个新标志，通过- -column-statistics=0来禁用他
+
+解决方法：
+　　mysqldump --column-statistics=0 -h ip -u root -p dbname > db.sql;
+
+例如
+mysqldump --column-statistics=0 -h120.78.72.112  -uroot -pAly?2018 company > "G:\database Backup\company%Y%%m%%d%.sql"
+
+
+nginx定时任务
+
+service crond start //启动服务
+service crond stop //关闭服务
+service crond restart //重启服务
+service crond reload //重新载入配置
+crontab -l 查看系统中有哪些定时任务
+crontab -r 删除定时任务
+crontab -e 编辑定时任务
+
+
+crontab -e  配置完成后，如何把保存并退出？
+ 
+1.Ctrl+o  写入
+ 
+2.出现“FIile name to Write...”，输入Enter
+ 
+3.Ctrl+x 保存输出
+ 
+提示“crontab:installing new crontab”表示成功
+
+######################
+no crontab for root - using an empty one 问题解决  修改crontab配置 
+1. select-editor
+2. 输入3
+######################
+
+
+30 * * * * /www/test.sh;/www/www.sh  # 每30分钟执行    多任务;分割
+* * * * * sleep 10; /www/test.sh #每分钟第10秒执行  注意 ; 必须
+*/1 * * * *  每隔一分钟执行一次脚本
+
+
+
+
+crontab -l
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+tailf /usr/local/tmp/test.txt
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

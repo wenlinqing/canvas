@@ -33,8 +33,25 @@ nginx定时任务
  
 crondtab -e
 
+crontab -e配置完成后，如何把保存并退出？
+ 
+1.Ctrl+o  写入
+ 
+2.出现“FIile name to Write...”，输入Enter
+ 
+3.Ctrl+x 保存输出
+ 
+提示“crontab:installing new crontab”表示成功
+
+
+no crontab for root - using an empty one 问题解决  修改crontab配置 
+1. select-editor
+2. 输入3
+
+
 30 * * * * /www/test.sh;/www/www.sh  # 每30分钟执行    多任务;分割
 * * * * * sleep 10; /www/test.sh #每分钟第10秒执行  注意 ; 必须
+*/1 * * * *  每隔一分钟执行一次脚本
 
 service crond restart       ###重启服务
 
@@ -46,7 +63,10 @@ service crond restart       ###重启服务
 crontab -l
 
 
-
+查看软件安装路径
+whereis nginx
+查询运行文件所在路径
+which nginx
 
 
 service crond start //启动服务
@@ -57,8 +77,33 @@ crontab -l 查看系统中有哪些定时任务
 crontab -r 删除定时任务
 crontab -e 编辑定时任务
 
+apt-get install node
+apt remove node
+
+navicat 连不上虚拟机mysql处理
+1  iptables -vnL   查看防火墙的状态，查看3306端口， 如果3306如下，是drop状态，或者根本无3306端口，说明3306端口设置问题
+  解决办法：
+   开放防火墙端口
+   添加需要监听的端口
+   /sbin/iptables -I INPUT -p tcp --dport 3306 -j ACCEPT
+   #将更改进行保存
+   /etc/rc.d/init.d/iptables save
+
+或者在iptables配置中添加
+  vi /etc/sysconfig/iptables
+  -A INPUT -p tcp -m state --state NEW -m tcp --dport 8082 -j ACCEPT
+  -A INPUT -p tcp -m state --state NEW -m tcp --dport 3306 -j ACCEPT
+  保存 重启iptables    service iptables restart
 
 
+
+2 远程链接了一下MySQL，出现了....is not allowed to connect to this MySQL server错误，
+查了一下，是因为MySQL没有允许远程登陆，所以要授权MySQL远程登陆。
+  解决：
+  从任何主机上使用root用户，密码：yourpassword（你的root密码）连接到mysql服务器：
+  # mysql -u root -proot 
+  # GRANT ALL PRIVILEGES ON *.* TO 'root'@'%' IDENTIFIED BY 'yourpassword' WITH GRANT OPTION;
+  # FLUSH PRIVILEGES
 
 
 mysqldump 导出提示Couldn't execute SELECT COLUMN_NAME...

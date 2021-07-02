@@ -132,10 +132,18 @@ location /MP_verify_3hF5YVbWYpFxgAsc.txt {
 
 pm2 start server.js --name='mobile'    pm2 start bin/www -x --name app
 
+pm2实现linux重启后自启动node服务  方法
+
+1  pm2 save  自动生成启动信息
+
+#设置pm2 开机启动  输入：
+2  pm2 startup
+
 pm2 log  查看日志
 
-nginx -s reload  重启nginx服务
 
+
+nginx -s reload  重启nginx服务
 
 service iptables status   查看防火墙状态
 service iptables start    启动防火墙
@@ -179,12 +187,29 @@ export PATH=$PATH:NODE_HOME/bin
 export NODE_HOME=/usr/local/node/node-v14.16.0-linux-x64
 export PATH=$NODE_HOME/bin:$PATH
 
-
 source /etc/profile  //重新启用 配置文件
+
+
+
+
+ln -s /usr/local/python3.9/bin/python3.9 /usr/bin/python     创建软连接
+
+
+ps -ef | grep nginx  查看Nginx是否启动
+
+查看服务列表:  chkconfig --list
+
+netstat -na|grep 80
 
 netstat -ntlp|grep  80  查看占用80端口号的进程
 kill  37189
 
+chkconfig --add /etc/init.d/nginx   将nginx服务加入chkconfig管理列表
+
+VMware虚拟机上配置nginx后，本机无法访问问题
+[root@localhost html]# /sbin/iptables -I INPUT -p tcp --dport 80 -j ACCEPT 
+[root@localhost html]# /etc/init.d/iptables save 
+[root@localhost html]# /etc/init.d/iptables restart
 
 
 
@@ -215,82 +240,11 @@ service mysqld restart  #重新启动mysql服务
 7 去掉 skip-grant-tables  再重启mysql服务
 
 
+本地访问虚拟机nginx
 
-
-
-
-
-
-shaofei       47.94.218.115 wenlinqing  moji2017
-
-
-
-luxudong 数据库
-
-地址  bdm307005586.my3w.com
-
-账号  bdm307005586
-
-密码  Xudtianc520
-
-
-数据库名
-bdm307005586_db
-
-
-主机 
-
-39.105.203.226
-
-用户名：byw5681870001
-
-
-
-
-
-
-jgb server
-
-120.78.72.112  root Aly?2018
-
-
-http://la-bang.cn/admin/
-
-
-
-jgb
-
-
-jgb2468
-
-
-
-景观邦 第三方管理的接入 
-
-帐号 yqy@la-bang.cn
-  Labang147
-
-
-开发者ID(AppID)
-wx3ecaabf3c5bb5db5
-
-AppSecret
-8d22be18fb5b106595e2b79ab5598c24
-
-
-
-
-
-账号 dm@la-bang.cn
-
-密码 Labang147
-
-
-wx9c45ad46f377cea8
-e80f605b85a117293b0ddd6c995eb114
-
-
-
+进入C:\Windows\System32\drivers\etc   修改hosts文件
+# 虚拟机地址
+192.168.238.128  vmware.coms
 
 
 
