@@ -1,6 +1,31 @@
 
 CentOS8 CentOS8  CentOS8 CentOS8 CentOS8  CentOS8 CentOS8 CentOS8  CentOS8
 
+
+
+CentOS 使用ifconfig没有显示ip
+cd /etc/sysconfig/network-scripts/
+
+vi ifcfg-ens33
+修改 ONBOOT=yes  保存
+重启 service network restart
+
+ifup ens33  # 启用网卡 
+ifdown ens33 # 停止网卡
+
+
+
+在CentOS8下MySQL5.7报错libncurses.so.5: cannot open shared object file
+
+解决
+yum install libncurses*
+
+
+
+
+
+
+
 ./configure 
 checking for C compiler ... not found
 
@@ -26,25 +51,6 @@ yum -y install pcre-devel openssl openssl-devel
 
 ./configure --prefix=/usr/local/nginx && make && make install
 
-
-
-
-CentOS 使用ifconfig没有显示ip
-cd /etc/sysconfig/network-scripts/
-
-vi ifcfg-ens33
-修改 ONBOOT=yes  保存
-重启 service network restart
-
-ifup ens33  # 启用网卡 
-ifdown ens33 # 停止网卡
-
-
-
-在CentOS8下MySQL5.7报错libncurses.so.5: cannot open shared object file
-
-解决
-yum install libncurses*
 
 
 
