@@ -18,8 +18,7 @@ yum makecache
 
 
 安装依赖包
-yum -y install gcc
-yum -y install zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel
+yum -y install gcc  zlib-devel bzip2-devel openssl-devel ncurses-devel sqlite-devel readline-devel tk-devel gdbm-devel db4-devel libpcap-devel xz-devel libffi-devel
 
 
 python3 安装
@@ -192,20 +191,6 @@ chkconfig --add /etc/init.d/mysqld
 
 
 
-相关防火墙配置
-
-添加：
-firewall-cmd --zone=public --add-port=80/tcp --permanent
-
-重新载入：
-firewall-cmd --reload
-
-查看
-查看所有打开的端口： firewall-cmd --zone=public --list-ports
-
-删除
-firewall-cmd --zone= public --remove-port=3306/tcp --permanent
-
 
 
 navicat 连不上虚拟机mysql处理
@@ -374,6 +359,78 @@ ln -s /usr/local/openssl/lib/libcrypto.so.1.1 /usr/lib64/libcrypto.so.1.1
 3.3 重新安装python
 ./configure --prefix=/usr/local/python3 --with-openssl=/usr/local/openssl
 make && make install
+
+
+
+
+CentOS8 CentOS8  CentOS8 CentOS8 CentOS8  CentOS8 CentOS8 CentOS8  CentOS8
+
+./configure 
+checking for C compiler ... not found
+
+
+解决：
+
+执行以下命令：
+
+yum -y install gcc gcc-c++ autoconf automake make
+
+
+
+错误提示：./configure: error: the HTTP cache module requires md5 functions
+from OpenSSL library.   You can either disable the module by using
+--without-http-cache option, or install the OpenSSL library into the system,
+or build the OpenSSL library statically from the source with nginx by using
+--with-http_ssl_module --with-openssl=<path> options.
+
+
+解决办法：
+yum -y install pcre-devel openssl openssl-devel
+
+
+./configure --prefix=/usr/local/nginx && make && make install
+
+
+
+
+CentOS 使用ifconfig没有显示ip
+cd /etc/sysconfig/network-scripts/
+
+vi ifcfg-ens33
+修改 ONBOOT=yes  保存
+重启 service network restart
+
+ifup ens33  # 启用网卡 
+ifdown ens33 # 停止网卡
+
+
+
+在CentOS8下MySQL5.7报错libncurses.so.5: cannot open shared object file
+
+解决
+yum install libncurses*
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 
