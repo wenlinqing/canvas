@@ -76,7 +76,14 @@ python
 
 
 
+自动生成依赖清单
+pip install pipreqs
 
+生成清单
+pipreqs
+
+用法：
+pip3 install -r /django/django_demo/requriements.txt
 
 
 
