@@ -86,6 +86,92 @@ pipreqs
 pip3 install -r /django/django_demo/requriements.txt
 
 
+uwsgi怎么启动停止
+## 二、启动停止重启
+
+uWSGI 通过 xxx.ini 启动后会在相同目录下生成一个 xxx.pid 的文件，里面只有一行内容是 uWSGI 的主进程的进程号。
+
+uWSGI 启动：
+uwsgi --ini xxx.ini
+
+
+uwsgi 重启：
+uwsgi --reload xxx.pid
+
+uwsgi 停止：
+uwsgi --stop xxx.pid
+
+
+如果不行，执行
+pkill -f uwsgi -9
+
+
+
+uwsgi 部署django项目==========================================================================================================
+
+静态资源收集 
+1  找到setting.py  底部增加 STATIC_ROOT='/django/django_demo/static_file'
+
+2 项目根目录执行  python3 manage.py collectstatic
+
+
+1 在项目下创建uwsgi.ini  输入:
+[uwsgi]
+http=192.168.116.128:8000
+chdir=/django/django_demo
+wsgi-file=django_demo/wsgi.py
+processes=4
+threads=2
+master=true
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+static-map=/static=static_file # 静态资源
+
+
+3 uwsgi --ini uwsgi.ini   # 启动命令
+
+4 浏览器访问 192.168.116.128:8000
+
+
+
+
+
+uwsgi + nginx 部署django项目==========================================================================================================
+
+1 在项目下创建uwsgi.ini  输入:
+[uwsgi]
+socket=127.0.0.1:8000
+chdir=/django/django_demo
+wsgi-file=django_demo/wsgi.py
+processes=4
+threads=2
+master=true
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+
+
+2 uwsgi --ini uwsgi.ini   # 启动命令
+
+3 nginx.conf配置 新增
+
+server {
+  listen 80;
+  server_name 192.168.116.129;
+
+  location / {
+    include uwsgi_params;
+    uwsgi_pass 127.0.0.1:8000;
+  }
+
+  #配置静态文件服务器
+  location /static {
+    alias /django/django_demo/static_file
+  }
+}
+
+4 nginx -s reload
+
+5 浏览器访问 192.168.116.129
 
 
 
@@ -94,13 +180,87 @@ pip3 install -r /django/django_demo/requriements.txt
 
 
 
+uwsgi + nginx 分布式部署django项目==========================================================================================================
+分类：
+  单服务器模式[伪分布式]
+  多服务器模式[分布式集群]
+
+
+单服务器模式   部署多个项目
+
+项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 
+1 在项目下创建uwsgi.ini  输入:
+[uwsgi]
+http=127.0.0.1:8000
+chdir=/django/django_demo
+wsgi-file=django_demo/wsgi.py
+processes=4
+threads=2
+master=true
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+
+2 uwsgi --ini uwsgi.ini   # 启动命令
+
+
+项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 项目2 
+1 在项目下创建uwsgi.ini  输入:
+[uwsgi]
+http=127.0.0.1:8002
+chdir=/django/django_demo2
+wsgi-file=django_demo/wsgi.py
+processes=4
+threads=2
+master=true
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+
+2 uwsgi --ini uwsgi.ini   # 启动命令
+
+
+项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 项目3 
+1 在项目下创建uwsgi.ini  输入:
+[uwsgi]
+http=127.0.0.1:8003
+chdir=/django/django_demo3
+wsgi-file=django_demo/wsgi.py
+processes=4
+threads=2
+master=true
+pidfile=uwsgi.pid
+daemonize=uwsgi.log
+
+2 uwsgi --ini uwsgi.ini   # 启动命令
 
 
 
 
+3 nginx.conf配置 新增
 
+# 负载均衡服务器
+upsteam myweb {
+  server 127.0.0.1:8000;
+  server 127.0.0.1:8002;
+  server 127.0.0.1:8003;
+}
 
+server {
+  listen 80;
+  server_name 192.168.116.129;
 
+  location / {
+    proxy_pass http://myweb;
+  }
+
+  #配置静态文件服务器
+  location /static {
+    alias /django/django_demo/static_file
+  }
+}
+
+4 nginx -s reload
+
+5 浏览器访问 192.168.116.129
 
 
 
