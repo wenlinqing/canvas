@@ -127,6 +127,8 @@ pidfile=uwsgi.pid
 daemonize=uwsgi.log
 static-map=/static=static_file # 静态资源
 
+buffer-size=65536  # uwsgi内部解析的数据包大小，默认4k  超过会被丢弃
+
 
 3 uwsgi --ini uwsgi.ini   # 启动命令
 
@@ -137,6 +139,14 @@ static-map=/static=static_file # 静态资源
 
 
 uwsgi + nginx 部署django项目==========================================================================================================
+uwsgi任务: 部署 web APP 
+nginx任务: 反向代理  静态文件服务器
+
+nginx反向代理： nginx接受请求 >>> 传递  >>  uwsgi
+               http=...  >>  socket=....
+为了保证项目的访问安全性， ip地址 >> 本机地址
+
+
 
 1 在项目下创建uwsgi.ini  输入:
 [uwsgi]
@@ -154,13 +164,14 @@ daemonize=uwsgi.log
 
 3 nginx.conf配置 新增
 
+# 虚拟服务器配置
 server {
   listen 80;
   server_name 192.168.116.129;
 
   location / {
     include uwsgi_params;
-    uwsgi_pass 127.0.0.1:8000;
+    uwsgi_pass 127.0.0.1:8000; #反向代理路由配置
   }
 
   #配置静态文件服务器
@@ -191,7 +202,7 @@ uwsgi + nginx 分布式部署django项目=======================================
 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 项目1 
 1 在项目下创建uwsgi.ini  输入:
 [uwsgi]
-http=127.0.0.1:8000
+http=127.0.0.1:8001
 chdir=/django/django_demo
 wsgi-file=django_demo/wsgi.py
 processes=4
@@ -238,7 +249,7 @@ daemonize=uwsgi.log
 3 nginx.conf配置 新增
 
 # 负载均衡服务器
-upsteam myweb {
+upstream myweb {
   server 127.0.0.1:8000;
   server 127.0.0.1:8002;
   server 127.0.0.1:8003;
