@@ -148,6 +148,27 @@ firewall-cmd --zone= public --remove-port=3306/tcp --permanent
 
 
 
+采用编译的方式安装uwsgi
+wget http://projects.unbit.it/downloads/uwsgi-latest.tar.gz
+
+tar zxvf uwsgi-latest.tar.gz 
+
+cd uwsgi-2.0.17.1/
+
+yum -y install libxml2 gcc python36-devel
+
+###########
+可以用make  但python命令可用
+######
+
+python3 uwsgiconfig.py --build
+
+python3 setup.py install
+
+ln -s /usr/local/uwsgi/uwsgi  /usr/bin
+
+uwsgi version
+
 
 
 
